@@ -1,0 +1,4 @@
+Databáza
+- zásielková sapoločnosť
+-tables zásielky, zákazníci
+-zásielky : id, hmotnosť, cena, stav, poštové čislo,ulica,číslo domu,id zákazníka,
