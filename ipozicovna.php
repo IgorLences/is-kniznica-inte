@@ -28,11 +28,11 @@
   <h4>Informačný systém pre knižnicu</h4>
 </div>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+<nav class="navbar navbar-expand-lg  navbar-light bg-light">
+  <a class="navbar-brand">Menu</a>
     <div class="navbar-nav">
-      <a class="nav-item nav-link" href="index.php">Zoznam kníh <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="ipozicovna.php">Záznamy o požičaní kníh</a>
+     <li> <a class="nav-item nav-link" href="index.php">Zoznam kníh <span class="sr-only">(current)</span></a></li>
+     <li> <a class="nav-item nav-link active" href="ipozicovna.php">Záznamy o požičaní kníh</a></li>
     </div>
   </div>
 </nav>
