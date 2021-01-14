@@ -64,6 +64,26 @@ class Knihy
 		    }
 		}
 
+
+		public function displayRecordByStavNaSklade()
+		{
+		    $query = "SELECT DISTINCT * FROM knihy WHERE stav = 'Na sklade'";
+		    $result = $this->con->query($query);
+			if ($result->num_rows > 0) 
+			{
+		    $data = array();
+			while ($row = $result->fetch_assoc()) 
+			{
+		           $data[] = $row;
+		    }
+			 return $data;
+			}
+			else
+			{
+			 echo "Neboli nájdené žiadne knihy";
+		    }
+		}
+
 		// Fetch single data for edit from customer table
 		public function displyaRecordById($idknihy)
 		{

@@ -2,8 +2,10 @@
 
   // Include database file
   include 'pozicanie.php';
+  include 'knihy.php';
 
   $pozicanieObj = new Pozicanie();
+  $knihyObj = new Knihy();
 
   // Insert Record in customer table
   if(isset($_POST['submit'])) {
@@ -29,6 +31,7 @@
 </div><br><br> 
 
 <div class="container">
+
   <form action="addpozicanie.php" method="POST">
 
     <div class="form-group">
@@ -37,8 +40,19 @@
     </div>
     
     <div class="form-group">
-      <label for="nazov_knihy">Názov knihy:</label>
-      <input type="text" class="form-control" name="nazov_knihy" placeholder="Zadajte názov knihy" required="">
+    <label for="nazov_knihy">Názov knihy:</label>
+      <select type="text" class="form-control" name="nazov_knihy"  required="">
+        <?php
+         $knihy = $knihyObj->displayRecordByStavNaSklade();
+         if ($knihy!=null)
+         {
+         foreach ($knihy as $knihy) 
+         {
+        echo  "<option>" .$knihy['nazov']. "</option>";
+         }
+         }
+        ?>
+      </select>
     </div>
 
     <div class="form-group">
@@ -51,6 +65,7 @@
       <input type="text" class="form-control" name="datum_do" placeholder="Zadajte dátum vrátenia" required="">
     </div>
 
+
     <div class="form-group">
       <label for="stav">Stav:</label>
       <select type="text" class="form-control" name="stav"  required="">
@@ -58,7 +73,7 @@
         <option>Nevrátená</option>
       </select>
     </div>
-
+    
     <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Submit">
   </form>
 </div><br><br>

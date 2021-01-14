@@ -2,8 +2,10 @@
   
   // Include database file
   include 'pozicanie.php';
+  include 'knihy.php';
 
   $pozicanieObj = new Pozicanie();
+  $knihyObj = new Knihy();
 
   // Edit pozicanie record
   if(isset($_GET['editId']) && !empty($_GET['editId'])) {
@@ -38,13 +40,25 @@
   <form action="editpozicanie.php" method="POST">
 
     <div class="form-group">
-      <label for="meno_zakaznika">Názov:</label>
+      <label for="meno_zakaznika">Meno zákazníka:</label>
       <input type="text" class="form-control" name="umeno_zakaznika" value="<?php echo $pozicanie['meno_zakaznika']; ?>" required="">
     </div>
 
     <div class="form-group">
-      <label for="nazov_knihy">Autor:</label>
-      <input type="text" class="form-control" name="unazov_knihy" value="<?php echo $pozicanie['nazov_knihy']; ?>" required="">
+      <label for="nazov_knihy">Názov knihy:</label>
+      <select type="text" class="form-control" name="unazov_knihy" ?>" required="">
+      <option selected><?php echo $pozicanie['nazov_knihy']; ?></option>
+      <?php
+         $knihy = $knihyObj->displayRecordByStavNaSklade();
+         if ($knihy!=null)
+         {
+         foreach ($knihy as $knihy) 
+         {
+        echo  "<option>" .$knihy['nazov']. "</option>";
+         }
+         }
+        ?>
+        </select>
     </div>
 
     <div class="form-group">
