@@ -51,13 +51,16 @@
 
     <div class="form-group">
       <label for="stav">Stav:</label>
-      <input type="text" class="form-control" name="stav" placeholder="Zadajte stav" required="">
+      <select type="text" class="form-control" name="stav"  required="">
+        <option>Vrátená</option>
+        <option>nevrátená</option>
+      </select>
     </div>
 
     <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Submit">
   </form>
-</div>
-
+</div><br><br>
+<hr class="my-4">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

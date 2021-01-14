@@ -34,34 +34,43 @@
 
 <div class="container">
   <form action="editpozicanie.php" method="POST">
+
     <div class="form-group">
       <label for="meno_zakaznika">Názov:</label>
       <input type="text" class="form-control" name="umeno_zakaznika" value="<?php echo $pozicanie['meno_zakaznika']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="nazov_knihy">Autor:</label>
       <input type="text" class="form-control" name="unazov_knihy" value="<?php echo $pozicanie['nazov_knihy']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="datum_od">Pocet strán:</label>
       <input type="text" class="form-control" name="udatum_od" value="<?php echo $pozicanie['datum_od']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="datum_do">Pocet strán:</label>
       <input type="text" class="form-control" name="udatum_do" value="<?php echo $pozicanie['datum_do']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="stav">Stav:</label>
-      <input type="text" class="form-control" name="ustav" value="<?php echo $pozicanie['stav']; ?>" required="">
+      <select type="text" class="form-control" name="ustav" value="<?php echo $pozicanie['stav']; ?>"required="">
+        <option>Vrátená</option>
+        <option>nevrátená</option>
+      </select>
     </div>
-
+    
     <div class="form-group">
       <input type="hidden" name="idpozicania" value="<?php echo $pozicanie['idpozicania']; ?>">
       <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Update">
     </div>
-  </form>
-</div>
 
+  </form>
+</div><br><br>
+<hr class="my-4">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

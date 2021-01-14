@@ -24,18 +24,20 @@
 </head>
 <body>
 
-<div class="card text-left" style="padding:15px;">
-  <h4>Informačný systém pre knižnicu</h4>
+<div class="container-fluid  bg-primary text-white " style="padding:15px;">
+<br>
+<h1>Informačný systém pre knižnicu</h1>
+<br>
 </div>
 
-<nav class="navbar navbar-expand-lg  navbar-light bg-light">
-  <a class="navbar-brand">Menu</a>
-    <div class="navbar-nav">
-     <li> <a class="nav-item nav-link active" href="index.php">Zoznam kníh <span class="sr-only">(current)</span></a></li>
-     <li> <a class="nav-item nav-link" href="ipozicovna.php">Záznamy o požičaní kníh</a></li>
-    </div>
-  </div>
-</nav>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="index.php">Zoznam kníh</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="ipozicovna.php">Záznamy o požičaní kníh</a>
+  </li>
+</ul>
 
 <br><br> 
 
