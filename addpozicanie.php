@@ -22,9 +22,11 @@
 </head>
 <body>
 
-<div class="card text-center" style="padding:15px;">
-  <h4>Informačný systém pre knižnicu</h4>
-</div><br> 
+<div class="container-fluid  bg-primary text-white " style="padding:15px;">
+<br>
+<h1>Informačný systém pre knižnicu</h1>
+<br>
+</div><br><br> 
 
 <div class="container">
   <form action="addpozicanie.php" method="POST">
@@ -53,7 +55,7 @@
       <label for="stav">Stav:</label>
       <select type="text" class="form-control" name="stav"  required="">
         <option>Vrátená</option>
-        <option>nevrátená</option>
+        <option>Nevrátená</option>
       </select>
     </div>
 

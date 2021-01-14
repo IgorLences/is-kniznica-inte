@@ -28,33 +28,43 @@
 </head>
 <body>
 
-<div class="card text-center" style="padding:15px;">
-  <h4>Informačný systém pre knižnicu</h4>
-</div><br> 
+<div class="container-fluid  bg-primary text-white " style="padding:15px;">
+<br>
+<h1>Informačný systém pre knižnicu</h1>
+<br>
+</div> <br><br> 
 
 <div class="container">
   <form action="edit.php" method="POST">
+
     <div class="form-group">
       <label for="nazov">Názov:</label>
       <input type="text" class="form-control" name="unazov" value="<?php echo $knihy['nazov']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="autor">Autor:</label>
       <input type="text" class="form-control" name="uautor" value="<?php echo $knihy['autor']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="pocet_stran">Pocet strán:</label>
       <input type="text" class="form-control" name="upocet_stran" value="<?php echo $knihy['pocet_stran']; ?>" required="">
     </div>
+
     <div class="form-group">
       <label for="stav">Stav:</label>
-      <input type="text" class="form-control" name="ustav" value="<?php echo $knihy['stav']; ?>" required="">
+      <select type="text" class="form-control" name="ustav" value="<?php echo $knihy['stav']; ?>"required="">
+      <option>Na sklade</option>
+      <option>Požičaná</option>
+      </select>
     </div>
 
     <div class="form-group">
       <input type="hidden" name="idknihy" value="<?php echo $knihy['idknihy']; ?>">
       <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Update">
     </div>
+
   </form>
 </div><br><br>
 <hr class="my-4">

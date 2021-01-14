@@ -22,18 +22,15 @@
 </head>
 <body>
 
-<div class="card text-center" style="padding:15px;">
-  <h4>Informačný systém pre knižnicu</h4>
-</div><br> 
+<div class="container-fluid  bg-primary text-white " style="padding:15px;">
+<br>
+<h1>Informačný systém pre knižnicu</h1>
+<br>
+</div><br><br> 
 
 <div class="container">
   <form action="add.php" method="POST">
-<!--
-    <div class="form-group">
-      <label for="idzasielky">Id zásielky:</label>
-      <input type="text" class="form-control" name="idzasielky" placeholder="Zadajte Id zásielky" required="">
-    </div>
--->
+
     <div class="form-group">
       <label for="nazov">Názov:</label>
       <input type="text" class="form-control" name="nazov" placeholder="Zadajte názov knihy" required="">
@@ -51,7 +48,10 @@
 
     <div class="form-group">
       <label for="stav">Stav:</label>
-      <input type="text" class="form-control" name="stav" placeholder="Zadajte stav" required="">
+      <select type="text" class="form-control" name="stav"  required="">
+        <option>Na sklade</option>
+        <option>Požičaná</option>
+      </select>
     </div>
 
     <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Submit">

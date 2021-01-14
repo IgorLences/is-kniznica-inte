@@ -28,9 +28,11 @@
 </head>
 <body>
 
-<div class="card text-center" style="padding:15px;">
-  <h4>Informačný systém pre knižnicu</h4>
-</div><br> 
+<div class="container-fluid  bg-primary text-white " style="padding:15px;">
+<br>
+<h1>Informačný systém pre knižnicu</h1>
+<br>
+</div><br><br> 
 
 <div class="container">
   <form action="editpozicanie.php" method="POST">
@@ -46,12 +48,12 @@
     </div>
 
     <div class="form-group">
-      <label for="datum_od">Pocet strán:</label>
+      <label for="datum_od">Dátum požičania:</label>
       <input type="text" class="form-control" name="udatum_od" value="<?php echo $pozicanie['datum_od']; ?>" required="">
     </div>
 
     <div class="form-group">
-      <label for="datum_do">Pocet strán:</label>
+      <label for="datum_do">Dátum vrátenia:</label>
       <input type="text" class="form-control" name="udatum_do" value="<?php echo $pozicanie['datum_do']; ?>" required="">
     </div>
 
@@ -59,10 +61,10 @@
       <label for="stav">Stav:</label>
       <select type="text" class="form-control" name="ustav" value="<?php echo $pozicanie['stav']; ?>"required="">
         <option>Vrátená</option>
-        <option>nevrátená</option>
+        <option>Nevrátená</option>
       </select>
     </div>
-    
+
     <div class="form-group">
       <input type="hidden" name="idpozicania" value="<?php echo $pozicanie['idpozicania']; ?>">
       <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Update">
