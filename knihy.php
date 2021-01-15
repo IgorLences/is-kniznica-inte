@@ -100,6 +100,22 @@ class Knihy
 		    }
 		}
 
+
+		public function IdKnihyByNazov($nazov)
+		{
+		    $query = "SELECT idknihy FROM knihy WHERE nazov = '$nazov' AND stav = 'Na sklade' LIMIT 1";
+		    $result = $this->con->query($query);
+			if ($result->num_rows > 0) 
+			{
+			$row = $result->fetch_assoc();
+			return $row;
+			}
+			else
+			{
+			echo "Neboli nájdené žiadne knihy";
+		    }
+		}
+
 		// Update customer data into customer table
 		public function updateRecord($postData)
 		{
@@ -125,9 +141,47 @@ class Knihy
 			
 		}
 
+		public function zmenaStavu($idknihy,$stav)
+		{
+			if (!empty($idknihy) && !empty($stav)) 
+			{
+
+				if($stav == "Vrátená")
+				{
+
+				$query = "UPDATE knihy SET stav = 'Na sklade' WHERE idknihy = $idknihy[idknihy]";
+				$sql = $this->con->query($query);
+				if ($sql==true) 
+				{
+					header("Location:index.php?msg2=update");
+				}
+				else
+				{
+					echo "Uloženie bolo neúspešné";
+				}
+				}
+
+				if($stav == "Nevrátená")
+				{
+
+				$query = "UPDATE knihy SET stav = 'Požičaná' WHERE idknihy = $idknihy[idknihy]";
+				$sql = $this->con->query($query);
+				if ($sql==true) 
+				{
+					header("Location:index.php?msg2=update");
+				}
+				else
+				{
+					echo "Uloženie bolo neúspešné";
+				}
+				}
+			}
+
+		}
+
 
 		// Delete customer data from customer table
-		public function deleteRecord( $idknihy)
+		public function deleteRecord($idknihy)
 		{
 		    $query = "DELETE FROM knihy WHERE  idknihy = $idknihy";
 		    $sql = $this->con->query($query);

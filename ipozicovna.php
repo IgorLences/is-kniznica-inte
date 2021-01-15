@@ -92,7 +92,7 @@
             <tr>
               <td><?php echo $pozicanie['idpozicania'] ?></td>
               <td><?php echo $pozicanie['meno_zakaznika'] ?></td>
-              <td><?php echo $pozicanie['nazov_knihy'] ?></td>
+              <td><?php echo $pozicanie['nazov'] ?></td>
               <td><?php echo $pozicanie['datum_od'] ?></td>
               <td><?php echo $pozicanie['datum_do'] ?></td>
               <td><?php echo $pozicanie['stav'] ?></td>

@@ -47,7 +47,7 @@
     <div class="form-group">
       <label for="nazov_knihy">Názov knihy:</label>
       <select type="text" class="form-control" name="unazov_knihy" ?>" required="">
-      <option selected><?php echo $pozicanie['nazov_knihy']; ?></option>
+      <option selected><?php echo $pozicanie['nazov']; ?></option>
       <?php
          $knihy = $knihyObj->displayRecordByStavNaSklade();
          if ($knihy!=null)
