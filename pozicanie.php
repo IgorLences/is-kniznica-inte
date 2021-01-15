@@ -37,9 +37,10 @@ class Pozicanie
 
 			$query="INSERT INTO pozicovna(meno_zakaznika, id_knihy, datum_od, datum_do, stav) VALUES('$meno_zakaznika',$id_knihy[idknihy],'$datum_od','$datum_do','$stav')";
 			$sql = $this->con->query($query);
-			$knihyObj->zmenaStavu($id_knihy,$stav);
+
 			if ($sql==true) 
 			{
+				$knihyObj->updatePocetNaSklade($id_knihy, $stav);
 			    header("Location:ipozicovna.php?msg1=insert");
 			}
 			else
@@ -73,7 +74,6 @@ class Pozicanie
 		public function displyaRecordById($idpozicania)	
 		{
 			$query = "SELECT pozicovna.idpozicania, knihy.nazov, pozicovna.meno_zakaznika, pozicovna.datum_od, pozicovna.datum_do, pozicovna.stav FROM pozicovna INNER JOIN knihy ON pozicovna.id_knihy = knihy.idknihy WHERE idpozicania = $idpozicania";
-		  //  $query = "SELECT * FROM pozicovna WHERE idpozicania = $idpozicania";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
 			{
@@ -86,10 +86,12 @@ class Pozicanie
 		    }
 		}
 
+
 		// Update customer data into customer table
 		public function updateRecord($postData)
 		{
-		    $idpozicania = $this->con->real_escape_string($_POST['idpozicania']);
+			$idpozicania = $this->con->real_escape_string($_POST['idpozicania']);
+			$nazov_knihy_old = $this->con->real_escape_string($_POST['nazov_knihy_old']);
 			$nazov_knihy = $this->con->real_escape_string($_POST['unazov_knihy']);
             $meno_zakaznika = $this->con->real_escape_string($_POST['umeno_zakaznika']);
             $datum_od = $this->con->real_escape_string($_POST['udatum_od']);
@@ -98,6 +100,7 @@ class Pozicanie
 
 			$knihyObj = new Knihy();
 			$id_knihy = $knihyObj->IdKnihyByNazov($nazov_knihy);
+			$idknihy = $knihyObj->IdKnihyByNazov($nazov_knihy_old);
 
 		if (!empty($idpozicania) && !empty($postData)) 
 		{
@@ -105,6 +108,11 @@ class Pozicanie
 			$sql = $this->con->query($query);
 			if ($sql==true) 
 			{
+				if($idknihy != $id_knihy)
+				{
+					$knihyObj->updatePocetNaSklade($idknihy, "Vrátená");
+				}
+				$knihyObj->updatePocetNaSklade($id_knihy, $stav);
 			    header("Location:ipozicovna.php?msg2=update");
 			}
 			else

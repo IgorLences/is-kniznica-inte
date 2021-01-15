@@ -51,7 +51,7 @@
       <input type="text" class="form-control" name="pocet_na_sklade" placeholder="Zadajte počet na sklade" required="">
     </div>
 
-    <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Submit">
+    <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Uložiť">
   </form>
 </div><br><br>
 <hr class="my-4">

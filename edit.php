@@ -59,7 +59,7 @@
 
     <div class="form-group">
       <input type="hidden" name="idknihy" value="<?php echo $knihy['idknihy']; ?>">
-      <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Update">
+      <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Uložiť">
     </div>
 
   </form>

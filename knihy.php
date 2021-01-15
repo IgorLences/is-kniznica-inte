@@ -77,6 +77,49 @@ class Knihy
 		    }
 		}
 
+		// Fetch single data for edit from customer table
+		public function updatePocetNaSklade($idknihy, $stav)	
+		{
+			if($stav == "Vrátená")
+			{
+				$query="UPDATE knihy SET pocet_na_sklade=(pocet_na_sklade + 1) WHERE idknihy = $idknihy[idknihy]";				
+			}
+			if($stav == "Nevrátená")
+			{
+				$query="UPDATE knihy SET pocet_na_sklade=pocet_na_sklade - 1 WHERE idknihy = $idknihy[idknihy]";				
+			}
+			$result = $this->con->query($query);
+			if ($result) 
+			{
+			return;
+			}
+			else
+			{
+			echo "Nepodarilo sa zmeniť počet kníh na sklade";
+			}
+		}
+
+// Fetch single data for edit from customer table
+		public function displyaRecordByPocetNaSklade()
+		{
+			$query = "SELECT * FROM knihy WHERE pocet_na_sklade > 0";
+		    $result = $this->con->query($query);
+			if ($result->num_rows > 0) 
+			{
+		    $data = array();
+			while ($row = $result->fetch_assoc()) 
+			{
+		           $data[] = $row;
+		    }
+			 return $data;
+			}
+			else
+			{
+			 echo "Neboli nájdené žiadne knihy";
+		    }
+		}
+
+
 
 		public function IdKnihyByNazov($nazov)
 		{

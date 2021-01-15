@@ -49,7 +49,7 @@
       <select type="text" class="form-control" name="unazov_knihy" ?>" required="">
       <option selected><?php echo $pozicanie['nazov']; ?></option>
       <?php
-         $knihy = $knihyObj->displayRecordByStavNaSklade();
+         $knihy = $knihyObj->displyaRecordByPocetNaSklade();
          if ($knihy!=null)
          {
          foreach ($knihy as $knihy) 
@@ -80,8 +80,12 @@
     </div>
 
     <div class="form-group">
+      <input type="hidden" name="nazov_knihy_old" value="<?php echo $pozicanie['nazov']; ?>">
       <input type="hidden" name="idpozicania" value="<?php echo $pozicanie['idpozicania']; ?>">
-      <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Update">
+    </div>
+
+    <div class="form-group">
+      <input type="submit" name="update" class="btn btn-primary" style="float:right;" value="Uložiť">
     </div>
 
   </form>

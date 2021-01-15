@@ -43,7 +43,7 @@
     <label for="nazov_knihy">Názov knihy:</label>
       <select type="text" class="form-control" name="nazov_knihy"  required="">
         <?php
-         $knihy = $knihyObj->displayRecordByStavNaSklade();
+         $knihy = $knihyObj->displyaRecordByPocetNaSklade();
          if ($knihy!=null)
          {
          foreach ($knihy as $knihy) 
@@ -72,9 +72,9 @@
         <option>Vrátená</option>
         <option>Nevrátená</option>
       </select>
-    </div>
-    
-    <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Submit">
+   
+    </div> 
+    <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Uložiť">
   </form>
 </div><br><br>
 <hr class="my-4">
