@@ -76,8 +76,8 @@
         <th>Id knihy</th>
         <th>Názov</th>
         <th>Autor</th>
-        <th>Pocet strán</th>
-        <th>Stav</th>
+        <th>Počet strán</th>
+        <th>Počet na sklade</th>
       </tr>
     </thead>
     <tbody>
@@ -93,7 +93,7 @@
               <td><?php echo $knihy['nazov'] ?></td>
               <td><?php echo $knihy['autor'] ?></td>
               <td><?php echo $knihy['pocet_stran'] ?></td>
-              <td><?php echo $knihy['stav'] ?></td>
+              <td><?php echo $knihy['pocet_na_sklade'] ?></td>
               <td>
                 <a href="edit.php?editId=<?php echo $knihy['idknihy'] ?>" style="color:green">
                   <i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp

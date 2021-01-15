@@ -53,11 +53,8 @@
     </div>
 
     <div class="form-group">
-      <label for="stav">Stav:</label>
-      <select type="text" class="form-control" name="ustav" value="<?php echo $knihy['stav']; ?>"required="">
-      <option>Na sklade</option>
-      <option>Požičaná</option>
-      </select>
+      <label for="pocet_na_sklade">Počet na sklade:</label>
+      <input type="text" class="form-control" name="upocet_na_sklade" value="<?php echo $knihy['pocet_na_sklade']; ?>"required="">
     </div>
 
     <div class="form-group">

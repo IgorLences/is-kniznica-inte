@@ -47,11 +47,8 @@
     </div>
 
     <div class="form-group">
-      <label for="stav">Stav:</label>
-      <select type="text" class="form-control" name="stav"  required="">
-        <option>Na sklade</option>
-        <option>Požičaná</option>
-      </select>
+      <label for="pocet_na_sklade">Počet na sklade:</label>
+      <input type="text" class="form-control" name="pocet_na_sklade" placeholder="Zadajte počet na sklade" required="">
     </div>
 
     <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Submit">

@@ -21,18 +21,15 @@ class Knihy
 		    }
 		}
 
-        // Insert customer data into customer table idknihy, nazov, autor, pocet_stran, stav
-        //
+        // Insert customer data into customer table idknihy, nazov, autor, pocet_stran, pocet_na_sklade
 		public function insertData($post)
 		{
-            //$idknihy = $this->con->real_escape_string($_POST['idknihy']);
 			$nazov = $this->con->real_escape_string($_POST['nazov']);
 			$autor = $this->con->real_escape_string($_POST['autor']);
             $pocet_stran = $this->con->real_escape_string($_POST['pocet_stran']);
-            $stav = $this->con->real_escape_string($_POST['stav']);
-
+            $pocet_na_sklade = $this->con->real_escape_string($_POST['pocet_na_sklade']);
             
-			$query="INSERT INTO knihy(nazov, autor, pocet_stran, stav) VALUES('$nazov','$autor',$pocet_stran,'$stav')";
+			$query="INSERT INTO knihy(nazov, autor, pocet_stran, pocet_na_sklade) VALUES('$nazov','$autor',$pocet_stran,$pocet_na_sklade)";
 			$sql = $this->con->query($query);
 			if ($sql==true) 
 			{
@@ -48,26 +45,6 @@ class Knihy
 		public function displayData()
 		{
 		    $query = "SELECT * FROM knihy";
-		    $result = $this->con->query($query);
-			if ($result->num_rows > 0) 
-			{
-		    $data = array();
-			while ($row = $result->fetch_assoc()) 
-			{
-		           $data[] = $row;
-		    }
-			 return $data;
-			}
-			else
-			{
-			 echo "Neboli nájdené žiadne knihy";
-		    }
-		}
-
-
-		public function displayRecordByStavNaSklade()
-		{
-		    $query = "SELECT DISTINCT * FROM knihy WHERE stav = 'Na sklade'";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
 			{
@@ -103,7 +80,7 @@ class Knihy
 
 		public function IdKnihyByNazov($nazov)
 		{
-		    $query = "SELECT idknihy FROM knihy WHERE nazov = '$nazov' AND stav = 'Na sklade' LIMIT 1";
+		    $query = "SELECT idknihy FROM knihy WHERE nazov = '$nazov' ";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
 			{
@@ -123,11 +100,11 @@ class Knihy
 			$nazov = $this->con->real_escape_string($_POST['unazov']);
             $autor = $this->con->real_escape_string($_POST['uautor']);
 			$pocet_stran = $this->con->real_escape_string($_POST['upocet_stran']);
-			$stav = $this->con->real_escape_string($_POST['ustav']);
+			$pocet_na_sklade = $this->con->real_escape_string($_POST['upocet_na_sklade']);
 
 		if (!empty($idknihy) && !empty($postData)) 
 		{
-			$query = "UPDATE knihy SET idknihy = $idknihy, nazov = '$nazov', autor = '$autor', pocet_stran = $pocet_stran, stav = '$stav' WHERE idknihy = $idknihy";
+			$query = "UPDATE knihy SET idknihy = $idknihy, nazov = '$nazov', autor = '$autor', pocet_stran = $pocet_stran, pocet_na_sklade = $pocet_na_sklade WHERE idknihy = $idknihy";
 			$sql = $this->con->query($query);
 			if ($sql==true) 
 			{
@@ -140,45 +117,6 @@ class Knihy
 		    }
 			
 		}
-
-		public function zmenaStavu($idknihy,$stav)
-		{
-			if (!empty($idknihy) && !empty($stav)) 
-			{
-
-				if($stav == "Vrátená")
-				{
-
-				$query = "UPDATE knihy SET stav = 'Na sklade' WHERE idknihy = $idknihy[idknihy]";
-				$sql = $this->con->query($query);
-				if ($sql==true) 
-				{
-					header("Location:index.php?msg2=update");
-				}
-				else
-				{
-					echo "Uloženie bolo neúspešné";
-				}
-				}
-
-				if($stav == "Nevrátená")
-				{
-
-				$query = "UPDATE knihy SET stav = 'Požičaná' WHERE idknihy = $idknihy[idknihy]";
-				$sql = $this->con->query($query);
-				if ($sql==true) 
-				{
-					header("Location:index.php?msg2=update");
-				}
-				else
-				{
-					echo "Uloženie bolo neúspešné";
-				}
-				}
-			}
-
-		}
-
 
 		// Delete customer data from customer table
 		public function deleteRecord($idknihy)
