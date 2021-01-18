@@ -37,18 +37,38 @@ class Knihy
 			}
 			else
 			{
-			    echo "Uloženie bolo neúspešné";
+			    header("Location:add.php?msg1=notsucces");
 			}
+		}
+		// Počet stránok
+		public function calcPages($page_no)
+		{
+			$total_records_per_page = 3;
+			$offset = ($page_no-1) * $total_records_per_page;
+			
+			$adjacents = "2";
+			$query = "SELECT COUNT(*) as total_records FROM knihy";
+			$result_count = $this->con->query($query);
+			$total_records = mysqli_fetch_array($result_count);
+			$total_records = $total_records['total_records'];
+			$total_no_of_pages = ceil($total_records / $total_records_per_page);
+			$second_last = $total_no_of_pages - 1; // total pages minus 1
+			$data = array();
+			$data[1] = $offset;
+			$data[2] = $total_no_of_pages;
+			$data[3] = $total_records_per_page;
+			return $data;
 		}
 
 		// Fetch customer records for show listing
-		public function displayData()
+		public function displayData($page_no)
 		{
-		    $query = "SELECT * FROM knihy";
+			$limit=$this->calcPages($page_no);
+		    $query = "SELECT * FROM knihy LIMIT $limit[1],$limit[3]";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
 			{
-		    $data = array();
+
 			while ($row = $result->fetch_assoc()) 
 			{
 		           $data[] = $row;
@@ -57,7 +77,7 @@ class Knihy
 			}
 			else
 			{
-			 echo "Neboli nájdené žiadne knihy";
+			echo "Neboli nájdené žiadne knihy";
 		    }
 		}
 
@@ -155,7 +175,7 @@ class Knihy
 			}
 			else
 			{
-			    echo "Uloženie bolo neúspešné";
+			    header("Location:edit.php?msg1=notsucces");;
 			}
 		    }
 			

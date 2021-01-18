@@ -7,6 +7,7 @@ class Pozicanie
 		private $password   = "748e6c6c";
 		private $database   = "heroku_db3c94d1d9b65dd";
 		public  $con;
+		
 
 		// Database Connection 
 		public function __construct()
@@ -45,15 +46,44 @@ class Pozicanie
 			}
 			else
 			{
-			    echo "Uloženie bolo neúspešné";
+			    header("Location:addpozicanie.php?msg1=notsucces");
 			}
 			
 		}
 
-		// Fetch customer records for show listing
-		public function displayData()
+		// Počet stránok
+		public function calcPages($page_no)
 		{
-		    $query = "SELECT pozicovna.idpozicania, knihy.nazov, pozicovna.meno_zakaznika, pozicovna.datum_od, pozicovna.datum_do, pozicovna.stav FROM pozicovna INNER JOIN knihy ON pozicovna.id_knihy = knihy.idknihy";
+			$filterstav=$_SESSION['fstav'];
+			if ($filterstav == "Všetko") {$fstav = "pozicovna.stav";}
+			if ($filterstav == "Vrátená") {$fstav = "'Vrátená'";}
+			if ($filterstav == "Nevrátená") {$fstav = "'Nevrátená'";}
+			$total_records_per_page = 3;
+			$offset = ($page_no-1) * $total_records_per_page;
+			
+			$adjacents = "2";
+			$query = "SELECT COUNT(*) as total_records FROM pozicovna WHERE stav = $fstav";
+			$result_count = $this->con->query($query);
+			$total_records = mysqli_fetch_array($result_count);
+			$total_records = $total_records['total_records'];
+			$total_no_of_pages = ceil($total_records / $total_records_per_page);
+			$second_last = $total_no_of_pages - 1; // total pages minus 1
+			$data = array();
+			$data[1] = $offset;
+			$data[2] = $total_no_of_pages;
+			$data[3] = $total_records_per_page;
+			return $data;
+		}
+
+		// Fetch customer records for show listing
+		public function displayData($page_no)
+		{
+			$filterstav=$_SESSION['fstav'];
+			if ($filterstav == "Všetko") {$fstav = "pozicovna.stav";}
+			if ($filterstav == "Vrátená") {$fstav = "'Vrátená'";}
+			if ($filterstav == "Nevrátená") {$fstav = "'Nevrátená'";}
+			$limit=$this->calcPages($page_no);
+		    $query = "SELECT pozicovna.idpozicania, knihy.nazov, pozicovna.meno_zakaznika, pozicovna.datum_od, pozicovna.datum_do, pozicovna.stav FROM pozicovna INNER JOIN knihy ON pozicovna.id_knihy = knihy.idknihy WHERE pozicovna.stav = $fstav LIMIT $limit[1],$limit[3]";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
 			{
@@ -117,7 +147,7 @@ class Pozicanie
 			}
 			else
 			{
-			    echo "Uloženie bolo neúspešné";
+			    header("Location:editpozicanie.php?msg1=notsucces");
 			}
 		    }
 			

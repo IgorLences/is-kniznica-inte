@@ -28,6 +28,16 @@
 <br>
 </div><br><br> 
 
+<?php
+    if (isset($_GET['msg1']) == "notsucces") 
+    {
+      echo "<div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert'>&times;</button>
+              Uloženie nebolo úspešné
+            </div>";
+    } 
+  ?>
+
 <div class="container">
   <form action="add.php" method="POST">
 
@@ -43,12 +53,12 @@
 
     <div class="form-group">
       <label for="pocet_stran">Počet strán:</label>
-      <input type="text" class="form-control" name="pocet_stran" placeholder="Zadajte počet strán" required="">
+      <input type="number" class="form-control" name="pocet_stran" placeholder="Zadajte počet strán" required="">
     </div>
 
     <div class="form-group">
       <label for="pocet_na_sklade">Počet na sklade:</label>
-      <input type="text" class="form-control" name="pocet_na_sklade" placeholder="Zadajte počet na sklade" required="">
+      <input type="number" class="form-control" name="pocet_na_sklade" placeholder="Zadajte počet na sklade" required="">
     </div>
 
     <input type="submit" name="submit" class="btn btn-primary" style="float:right;" value="Uložiť">

@@ -11,6 +11,18 @@
       $deleteId = $_GET['deleteId'];
       $knihyObj->deleteRecord($deleteId);
   }
+  //Current page
+  if (isset($_GET['page_no']) && !empty($_GET['page_no'])) 
+  {
+    $page_no = $_GET['page_no'];
+    $knihy=$knihyObj->displayData($page_no); 
+  } 
+  else
+  {
+    $page_no = 1;
+    $knihy=$knihyObj->displayData($page_no);
+  }
+  
      
 ?> 
 <!DOCTYPE html>
@@ -67,10 +79,47 @@
   ?>
 
 
-  <h2>Knihy
+  <h2>Záznamy kníh
     <a href="add.php" class="btn btn-primary" style="float:right;">Pridať novú knihu</a>
   </h2>
-  <table class="table table-hover">
+
+
+
+
+<nav aria-label="...">
+  <ul class="pagination">
+  <?php 
+        $data = $knihyObj->calcPages($page_no);
+        $total_no_of_pages = $data[2];
+        $previous_page = $page_no - 1;
+        $next_page = $page_no + 1;
+  ?>
+
+    <li <?php if($page_no <= 1){echo 'class="page-item disabled"';} else {echo 'class="page-item"';} ?>>
+      <a class="page-link" <?php echo "href='?page_no=$previous_page'"?> tabindex="-1" aria-disabled="true">Predchádzajúca</a>
+    </li>
+
+    <li <?php if($page_no <= 1){echo 'class="page-item disabled"';} else {echo 'class="page-item"';} ?>>
+    <a class="page-link" <?php echo "href='?page_no=$previous_page'"?>><?php echo $previous_page;?></a>
+    </li>
+
+    <li class="page-item active" aria-current="page">
+    <a class="page-link" <?php echo "href='?page_no=$page_no'"?>><?php echo $page_no;?></a>
+    </li>
+
+    <li <?php if($page_no >= $total_no_of_pages){echo 'class="page-item disabled"';} else {echo 'class="page-item"';} ?>>
+    <a class="page-link" <?php echo "href='?page_no=$next_page'"?>><?php echo $next_page;?></a>
+    </li>
+
+    <li <?php if($page_no >= $total_no_of_pages){echo 'class="page-item disabled"';} else {echo 'class="page-item"';} ?>>
+    <a class="page-link" <?php echo "href='?page_no=$next_page'"?>>Ďalšia</a>
+    </li>
+
+  </ul>
+</nav>
+</ul>
+
+<table class="table table-hover table-striped">
     <thead>
       <tr>
         <th>Id knihy</th>
@@ -78,11 +127,12 @@
         <th>Autor</th>
         <th>Počet strán</th>
         <th>Počet na sklade</th>
+        <th>Upraviť/Zmazať</th>
       </tr>
     </thead>
     <tbody>
+    
         <?php 
-          $knihy = $knihyObj->displayData();
           if ($knihy!=null)
           {
           foreach ($knihy as $knihy) 

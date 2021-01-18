@@ -63,12 +63,12 @@
 
     <div class="form-group">
       <label for="datum_od">Dátum požičania:</label>
-      <input type="text" class="form-control" name="udatum_od" value="<?php echo $pozicanie['datum_od']; ?>" required="">
+      <input type="date" class="form-control" name="udatum_od" value="<?php echo $pozicanie['datum_od']; ?>" required="">
     </div>
 
     <div class="form-group">
       <label for="datum_do">Dátum vrátenia:</label>
-      <input type="text" class="form-control" name="udatum_do" value="<?php echo $pozicanie['datum_do']; ?>" required="">
+      <input type="date" class="form-control" name="udatum_do" value="<?php echo $pozicanie['datum_do']; ?>" required="">
     </div>
 
     <div class="form-group">
