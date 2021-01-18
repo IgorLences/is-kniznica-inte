@@ -2,3 +2,4 @@ Databáza
 - knižnica
 -tables knihy,pozicovna
 -knihy : id, názov, autor, pocet strán, pocet kusov na sklade,
+pozicovna : id, idknihy, dátum_požičania, dátum_vrátenia, stav
