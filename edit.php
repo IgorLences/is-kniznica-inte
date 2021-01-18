@@ -1,19 +1,18 @@
 <?php
   
-  // Include database file
   include 'knihy.php';
 
   $knihyObj = new Knihy();
 
-  // Edit knihy record
+  // načítanie knihy ,ktorú chceme editovať
   if(isset($_GET['editId']) && !empty($_GET['editId'])) {
     $editId = $_GET['editId'];
-    $knihy = $knihyObj->displyaRecordById($editId);
+    $knihy = $knihyObj->zobrazZaznamById($editId);
   }
 
-  // Update Record in knihy table
+  // Update záznamu knihy podľa idknihy
   if(isset($_POST['update'])) {
-    $knihyObj->updateRecord($_POST);
+    $knihyObj->updateZaznam($_POST);
   }  
     
 ?>
@@ -27,13 +26,13 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
-
+<!--header na zobrazenie názvu app -->
 <div class="container-fluid  bg-primary text-white " style="padding:15px;">
 <br>
 <h1>Informačný systém pre knižnicu</h1>
 <br>
 </div> <br><br> 
-
+<!--alert ktorý oznamujú neúspešnú akciu -->
 <?php
     if (isset($_GET['msg1']) == "notsucces") 
     {
@@ -43,7 +42,7 @@
             </div>";
     } 
   ?>
-
+<!--form na zadanie zmien pre update knihy -->
 <div class="container">
   <form action="edit.php" method="POST">
 

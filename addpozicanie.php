@@ -1,15 +1,14 @@
 <?php
 
-  // Include database file
   include 'pozicanie.php';
   include 'knihy.php';
 
   $pozicanieObj = new Pozicanie();
   $knihyObj = new Knihy();
 
-  // Insert Record in customer table
+  //Vloženie nového záznamu o požičaní knihy do databázy
   if(isset($_POST['submit'])) {
-    $pozicanieObj->insertData($_POST);
+    $pozicanieObj->vlozitZaznam($_POST);
   }
 
 ?>
@@ -23,12 +22,13 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
-
+<!--header na zobrazenie názvu app -->
 <div class="container-fluid  bg-primary text-white " style="padding:15px;">
 <br>
 <h1>Informačný systém pre knižnicu</h1>
 <br>
 </div><br><br> 
+<!--alert ktorý oznamujú neúspešnú akciu -->
 <?php
     if (isset($_GET['msg1']) == "notsucces") 
     {
@@ -38,6 +38,7 @@
             </div>";
     } 
   ?>
+<!--form na zadanie údajov o zázname o požičaní knihy-->
 <div class="container">
 
   <form action="addpozicanie.php" method="POST">
@@ -51,7 +52,7 @@
     <label for="nazov_knihy">Názov knihy:</label>
       <select type="text" class="form-control" name="nazov_knihy"  required="">
         <?php
-         $knihy = $knihyObj->displyaRecordByPocetNaSklade();
+         $knihy = $knihyObj->zobrazZaznamIfNaSklade();
          if ($knihy!=null)
          {
          foreach ($knihy as $knihy) 

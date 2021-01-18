@@ -8,7 +8,7 @@ class Knihy
 		public  $con;
 
 
-		// Database Connection 
+		// Vytvorenie pripojenia k databáze
 		public function __construct()
 		{
 		    $this->con = new mysqli($this->servername, $this->username,$this->password,$this->database);
@@ -21,8 +21,8 @@ class Knihy
 		    }
 		}
 
-        // Insert customer data into customer table idknihy, nazov, autor, pocet_stran, pocet_na_sklade
-		public function insertData($post)
+        //Vložiť novú knihu do datábazy knihy(nazov, autor, pocet_stran, pocet_na_sklade) id je AI
+		public function vlozitZaznam($post)
 		{
 			$nazov = $this->con->real_escape_string($_POST['nazov']);
 			$autor = $this->con->real_escape_string($_POST['autor']);
@@ -40,14 +40,18 @@ class Knihy
 			    header("Location:add.php?msg1=notsucces");
 			}
 		}
-		// Počet stránok
-		public function calcPages($page_no)
+
+		// Výpočet potrebných premenných na stránkovanie
+		public function vypStrankovanie($page_no)
 		{
+			$filterautor=$_SESSION['fautor'];
+			if ($filterautor == "Všetko") {$fautor = "autor";}
+			else {$fautor= "'".$filterautor."'" ;}
 			$total_records_per_page = 3;
 			$offset = ($page_no-1) * $total_records_per_page;
 			
 			$adjacents = "2";
-			$query = "SELECT COUNT(*) as total_records FROM knihy";
+			$query = "SELECT COUNT(*) as total_records FROM knihy WHERE autor = $fautor";
 			$result_count = $this->con->query($query);
 			$total_records = mysqli_fetch_array($result_count);
 			$total_records = $total_records['total_records'];
@@ -60,11 +64,14 @@ class Knihy
 			return $data;
 		}
 
-		// Fetch customer records for show listing
-		public function displayData($page_no)
+		//Select záznamy podľa požadovanej stránky a filtru z databázy knihy na následné zobrazenie
+		public function zobrazZaznamy($page_no)
 		{
-			$limit=$this->calcPages($page_no);
-		    $query = "SELECT * FROM knihy LIMIT $limit[1],$limit[3]";
+			$filterautor=$_SESSION['fautor'];
+			if ($filterautor == "Všetko") {$fautor ="autor";}
+			else {$fautor= "'".$filterautor."'" ;}
+			$limit=$this->vypStrankovanie($page_no);
+			$query = "SELECT * FROM knihy  WHERE autor = $fautor LIMIT $limit[1],$limit[3]";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
 			{
@@ -81,8 +88,29 @@ class Knihy
 		    }
 		}
 
-		// Fetch single data for edit from customer table
-		public function displyaRecordById($idknihy)
+		//Select všetky záznamy z databázy knihy na následné zobrazenie
+		public function zobrazVsetkyZaznamy()
+		{
+			$query = "SELECT * FROM knihy";
+			$result = $this->con->query($query);
+			if ($result->num_rows > 0) 
+			{
+
+			while ($row = $result->fetch_assoc()) 
+			{
+				$data[] = $row;
+			}
+			return $data;
+			}
+			else
+			{
+			echo "Neboli nájdené žiadne knihy";
+			}
+		}
+
+
+		// Select jeden záznam  z databázy knihy podľa id
+		public function zobrazZaznamById($idknihy)
 		{
 		    $query = "SELECT * FROM knihy WHERE idknihy = $idknihy";
 		    $result = $this->con->query($query);
@@ -97,7 +125,7 @@ class Knihy
 		    }
 		}
 
-		// Fetch single data for edit from customer table
+		//Update počtu na kníh na sklade ak bola vrátená alebo požičaná
 		public function updatePocetNaSklade($idknihy, $stav)	
 		{
 			if($stav == "Vrátená")
@@ -119,8 +147,8 @@ class Knihy
 			}
 		}
 
-// Fetch single data for edit from customer table
-		public function displyaRecordByPocetNaSklade()
+		// Select  záznamy  z databázy knihy ak sa kniha nachádza na sklade
+		public function zobrazZaznamIfNaSklade()
 		{
 			$query = "SELECT * FROM knihy WHERE pocet_na_sklade > 0";
 		    $result = $this->con->query($query);
@@ -139,9 +167,8 @@ class Knihy
 		    }
 		}
 
-
-
-		public function IdKnihyByNazov($nazov)
+		//Select idknihy z databázy knihy podľa názvu knihy
+		public function idKnihyByNazov($nazov)
 		{
 		    $query = "SELECT idknihy FROM knihy WHERE nazov = '$nazov' ";
 		    $result = $this->con->query($query);
@@ -156,8 +183,8 @@ class Knihy
 		    }
 		}
 
-		// Update customer data into customer table
-		public function updateRecord($postData)
+		//Update záznamu v databáze knihy
+		public function updateZaznam($postData)
 		{
 		    $idknihy = $this->con->real_escape_string($_POST['idknihy']);
 			$nazov = $this->con->real_escape_string($_POST['unazov']);
@@ -181,8 +208,8 @@ class Knihy
 			
 		}
 
-		// Delete customer data from customer table
-		public function deleteRecord($idknihy)
+		// Delete záznamu z databázy knihy podľa idknihy
+		public function deleteZaznam($idknihy)
 		{
 		    $query = "DELETE FROM knihy WHERE  idknihy = $idknihy";
 		    $sql = $this->con->query($query);

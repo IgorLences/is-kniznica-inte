@@ -1,21 +1,20 @@
 <?php
   
-  // Include database file
   include 'pozicanie.php';
   include 'knihy.php';
 
   $pozicanieObj = new Pozicanie();
   $knihyObj = new Knihy();
 
-  // Edit pozicanie record
+  // načítanie záznamu o požičaní ,ktorý chceme editovať
   if(isset($_GET['editId']) && !empty($_GET['editId'])) {
     $editId = $_GET['editId'];
-    $pozicanie = $pozicanieObj->displyaRecordById($editId);
+    $pozicanie = $pozicanieObj->zobrazZaznamById($editId);
   }
 
-  // Update Record in pozicanie table
+  // Update záznamu o požičaní podľa id
   if(isset($_POST['update'])) {
-    $pozicanieObj->updateRecord($_POST);
+    $pozicanieObj->updateZaznam($_POST);
   }  
     
 ?>
@@ -29,13 +28,23 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
-
+<!--header na zobrazenie názvu app -->
 <div class="container-fluid  bg-primary text-white " style="padding:15px;">
 <br>
 <h1>Informačný systém pre knižnicu</h1>
 <br>
 </div><br><br> 
-
+<!--alert ktorý oznamujú neúspešnú akciu -->
+<?php
+    if (isset($_GET['msg1']) == "notsucces") 
+    {
+      echo "<div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert'>&times;</button>
+              Uloženie nebolo úspešné
+            </div>";
+    } 
+  ?>
+  <!--form na zadanie zmien pre update knihy -->
 <div class="container">
   <form action="editpozicanie.php" method="POST">
 
@@ -49,7 +58,7 @@
       <select type="text" class="form-control" name="unazov_knihy" ?>" required="">
       <option selected><?php echo $pozicanie['nazov']; ?></option>
       <?php
-         $knihy = $knihyObj->displyaRecordByPocetNaSklade();
+         $knihy = $knihyObj->zobrazZaznamIfNaSklade();
          if ($knihy!=null)
          {
          foreach ($knihy as $knihy) 

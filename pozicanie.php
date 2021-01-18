@@ -9,7 +9,7 @@ class Pozicanie
 		public  $con;
 		
 
-		// Database Connection 
+		// Vytvorenie pripojenia k databáze
 		public function __construct()
 		{
 		    $this->con = new mysqli($this->servername, $this->username,$this->password,$this->database);
@@ -22,9 +22,8 @@ class Pozicanie
 		    }
 		}
 
-        // Insert customer data into customer table idpozicania, meno_zakaznika, id_knihy, datum_od, datum_do, stav
-        //
-		public function insertData($post)
+         //Vložiť nový záznam o požičaní knihy do datábazy pozicovna(meno_zakaznika, id_knihy, datum_od, datum_do, stav) id je AI
+		public function vlozitZaznam($post)
 		{
 			
             $meno_zakaznika = $this->con->real_escape_string($_POST['meno_zakaznika']);
@@ -34,7 +33,7 @@ class Pozicanie
 			$stav = $this->con->real_escape_string($_POST['stav']);
 			
 			$knihyObj = new Knihy();
-			$id_knihy = $knihyObj->IdKnihyByNazov($nazov_knihy);
+			$id_knihy = $knihyObj->idKnihyByNazov($nazov_knihy);
 
 			$query="INSERT INTO pozicovna(meno_zakaznika, id_knihy, datum_od, datum_do, stav) VALUES('$meno_zakaznika',$id_knihy[idknihy],'$datum_od','$datum_do','$stav')";
 			$sql = $this->con->query($query);
@@ -51,8 +50,8 @@ class Pozicanie
 			
 		}
 
-		// Počet stránok
-		public function calcPages($page_no)
+		// Výpočet potrebných premenných na stránkovanie
+		public function vypStrankovanie($page_no)
 		{
 			$filterstav=$_SESSION['fstav'];
 			if ($filterstav == "Všetko") {$fstav = "pozicovna.stav";}
@@ -75,14 +74,14 @@ class Pozicanie
 			return $data;
 		}
 
-		// Fetch customer records for show listing
-		public function displayData($page_no)
+		//Select záznamy podľa požadovanej stránky a filtru z databázy pozicovna a knihy na následné zobrazenie
+		public function zobrazZaznamy($page_no)
 		{
 			$filterstav=$_SESSION['fstav'];
 			if ($filterstav == "Všetko") {$fstav = "pozicovna.stav";}
 			if ($filterstav == "Vrátená") {$fstav = "'Vrátená'";}
 			if ($filterstav == "Nevrátená") {$fstav = "'Nevrátená'";}
-			$limit=$this->calcPages($page_no);
+			$limit=$this->vypStrankovanie($page_no);
 		    $query = "SELECT pozicovna.idpozicania, knihy.nazov, pozicovna.meno_zakaznika, pozicovna.datum_od, pozicovna.datum_do, pozicovna.stav FROM pozicovna INNER JOIN knihy ON pozicovna.id_knihy = knihy.idknihy WHERE pozicovna.stav = $fstav LIMIT $limit[1],$limit[3]";
 		    $result = $this->con->query($query);
 			if ($result->num_rows > 0) 
@@ -100,8 +99,8 @@ class Pozicanie
 		    }
 		}
 
-		// Fetch single data for edit from customer table
-		public function displyaRecordById($idpozicania)	
+		// Select jeden záznam  z databázy pozicovna podľa id
+		public function zobrazZaznamById($idpozicania)	
 		{
 			$query = "SELECT pozicovna.idpozicania, knihy.nazov, pozicovna.meno_zakaznika, pozicovna.datum_od, pozicovna.datum_do, pozicovna.stav FROM pozicovna INNER JOIN knihy ON pozicovna.id_knihy = knihy.idknihy WHERE idpozicania = $idpozicania";
 		    $result = $this->con->query($query);
@@ -117,8 +116,8 @@ class Pozicanie
 		}
 
 
-		// Update customer data into customer table
-		public function updateRecord($postData)
+		//Update záznamu v databáze pozicovna
+		public function updateZaznam($postData)
 		{
 			$idpozicania = $this->con->real_escape_string($_POST['idpozicania']);
 			$nazov_knihy_old = $this->con->real_escape_string($_POST['nazov_knihy_old']);
@@ -129,8 +128,8 @@ class Pozicanie
 			$stav = $this->con->real_escape_string($_POST['ustav']);
 
 			$knihyObj = new Knihy();
-			$id_knihy = $knihyObj->IdKnihyByNazov($nazov_knihy);
-			$idknihy = $knihyObj->IdKnihyByNazov($nazov_knihy_old);
+			$id_knihy = $knihyObj->idKnihyByNazov($nazov_knihy);
+			$idknihy = $knihyObj->idKnihyByNazov($nazov_knihy_old);
 
 		if (!empty($idpozicania) && !empty($postData)) 
 		{
@@ -154,8 +153,8 @@ class Pozicanie
 		}
 
 
-		// Delete customer data from customer table
-		public function deleteRecord( $idpozicania)
+		// Delete záznamu z databázy pozicanie podľa idpozicanie
+		public function deleteZaznam( $idpozicania)
 		{
 		    $query = "DELETE FROM pozicovna WHERE  idpozicania = $idpozicania";
 		    $sql = $this->con->query($query);

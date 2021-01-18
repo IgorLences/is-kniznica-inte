@@ -1,13 +1,12 @@
 <?php
 
-  // Include database file
   include 'knihy.php';
 
   $knihyObj = new Knihy();
 
-  // Insert Record in customer table
+  //Vloženie záznamu novej knihy do databázy
   if(isset($_POST['submit'])) {
-    $knihyObj->insertData($_POST);
+    $knihyObj->vlozitZaznam($_POST);
   }
 
 ?>
@@ -21,13 +20,13 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
-
+<!--header na zobrazenie názvu app -->
 <div class="container-fluid  bg-primary text-white " style="padding:15px;">
 <br>
 <h1>Informačný systém pre knižnicu</h1>
 <br>
 </div><br><br> 
-
+<!--alert ktorý oznamujú neúspešnú akciu -->
 <?php
     if (isset($_GET['msg1']) == "notsucces") 
     {
@@ -37,7 +36,7 @@
             </div>";
     } 
   ?>
-
+<!--form na zadanie údajov o knihe-->
 <div class="container">
   <form action="add.php" method="POST">
 
